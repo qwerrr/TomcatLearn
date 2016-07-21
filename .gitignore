@@ -10,6 +10,6 @@
 
 hs_err_pid*
 
-target/
+/target/
 *.iml
 .idea/*

@@ -8,6 +8,21 @@ package org.yan;
 public class TomcatLearnContext {
 
     /**
+     * 服务器ip
+     */
+    public static final String SERVER_IP = "127.0.0.1";
+
+    /**
+     * 服务器开启端口
+     */
+    public static final int SERVER_PORT = 8080;
+
+    /**
+     * 服务器连接数
+     */
+    public static final int BACK_LOG = 50;
+
+    /**
      * 项目根路径
      */
     public static final String PROGRAM_PATH = "/home/coderam/development/workspace/TomcatLearn";
