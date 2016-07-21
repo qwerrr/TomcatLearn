@@ -3,6 +3,8 @@ package org.yan.ex02.impl;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.Locale;
 
@@ -14,6 +16,14 @@ import java.util.Locale;
  * @date 16-7-20
  */
 public class HttpServletResponseImpl implements ServletResponse {
+
+    private OutputStream outputStream;
+    private PrintWriter printWriter;
+
+    public HttpServletResponseImpl(OutputStream outputStream){
+        this.outputStream = outputStream;
+        this.printWriter = new PrintWriter(new PrintStream(outputStream));
+    }
 
     public String getCharacterEncoding() {
         return null;
@@ -28,7 +38,7 @@ public class HttpServletResponseImpl implements ServletResponse {
     }
 
     public PrintWriter getWriter() throws IOException {
-        return null;
+        return printWriter;
     }
 
     public void setCharacterEncoding(String s) {

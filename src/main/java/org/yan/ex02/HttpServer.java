@@ -1,5 +1,7 @@
 package org.yan.ex02;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -7,8 +9,8 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.yan.ex01.Request;
-import org.yan.ex01.Response;
+import org.yan.ex02.impl.DynamicResouceProcesser;
+import org.yan.ex02.impl.StaticResouceProcesser;
 
 /**
  * @desc
@@ -43,16 +45,21 @@ public class HttpServer {
                 socket = serverSocket.accept();
                 is = socket.getInputStream();
                 os = socket.getOutputStream();
-                Request request = new Request(is);
-                request.parse();
+
+                ModelFactory modelFactory = new ModelFactory();
+                ServletRequest request = modelFactory.createRequest(is);
                 System.out.println("请求:"+request.toString());
 
-                Response response = new Response(os, request);
-                response.sendStaticResource();
+                ServletResponse response = modelFactory.createResponse(os);
 
-                if(request.getUri().equals(SHUT_DOWN_URI)){
-                    shutDown = true;
+                String uri = request.getLocalAddr();
+                Processer processer = null;
+                if(uri.startsWith("/servlet")){
+                    processer = new DynamicResouceProcesser();
+                }else{
+                    processer = new StaticResouceProcesser();
                 }
+                processer.process(request, response);
             } catch (Exception e) {
                 e.printStackTrace();
             }finally {

@@ -1,6 +1,6 @@
 package org.yan.ex01;
 
-import org.yan.MyCodeContext;
+import org.yan.TomcatLearnContext;
 
 import java.io.*;
 
@@ -25,7 +25,7 @@ public class Response implements IResponse{
 
         FileInputStream fileInputStream = null;
         try {
-            File file = new File(MyCodeContext.WEB_APP_PATH, request.getUri());
+            File file = new File(TomcatLearnContext.WEB_APP_PATH, request.getUri());
             //文件存在,读取文件将数据扔到outputstream
             if (file.exists()){
                 fileInputStream = new FileInputStream(file);

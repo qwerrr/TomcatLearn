@@ -8,10 +8,8 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Title:        Pyrmont Servlet Container
- * Description:
- * Copyright:    Copyright (c) 2002
- * Company:      Brainy Software
+ * Copyright: Copyright (c) 2002
+ * Company: Brainy Software
  * @author Budi Kurniawan
  * @version 1.0
  */

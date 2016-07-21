@@ -1,53 +1,43 @@
 package org.yan.ex02.impl;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-import java.io.*;
-
-import org.yan.MyCodeContext;
 import org.yan.ex02.Processer;
+import org.yan.ex02.servlet.PrimitiveServlet;
 
 /**
  * 动态资源处理器
+ * tomcat在处理动态资源时需要通过url路径地址确认用户在调用哪个servlet, 所以应该还需要有一套策略用于
+ * 加载/管理 url和servlet之间的映射
+ *
  * @author YanMeng
  * @date 16-7-20
  */
 public class DynamicResouceProcesser implements Processer{
 
-    private static final int BUFFER_LENGTH = 2048;
+    private static final int BUFFER_LENGTH = 1024;
 
     public void process(ServletRequest request, ServletResponse response) {
-        FileReader br = null;
-        PrintWriter printWriter = null;
-        try {
-            File file = new File(MyCodeContext.WEB_APP_PATH, request.getLocalAddr());
-            printWriter = response.getWriter();
-            //文件存在,读取文件将数据扔到outputstream
-            if (file.exists()){
-                br = new FileReader(file);
-                byte[] buffer = new byte[fileInputStream.available()];
-                while (fileInputStream.read(buffer) != -1){
-                    printWriter.write(buffer);
 
-                }
-            }else{
-                String error404 = "HTTP/1.1 404 File Not Found\r\n" +
-                        "Content-Type: text/html\r\n" +
-                        "Content-Length: 23\r\n" +
-                        "\r\n" +
-                        "<h1>File Not Found</h1>";
-                os.write(error404.getBytes());
-            }
-            os.flush();
-            os.close();
-        } catch (FileNotFoundException e) {
+        PrimitiveServlet servlet = new PrimitiveServlet();
+        try {
+            PrintWriter pw = response.getWriter();
+            String success200 = "HTTP/1.1 200 OK\r\n" +
+                    "Connection: keep-alive\r\n" +
+                    "Content-Type: text/html\r\n" +
+                    "\r\n";
+            pw.write(success200);
+            servlet.service(request,response);
+            pw.flush();
+            pw.close();
+        } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if(fileInputStream != null)
-                fileInputStream.close();
         }
     }
 }

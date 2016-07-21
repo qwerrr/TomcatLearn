@@ -19,10 +19,15 @@ public class HttpServletRequestImpl implements ServletRequest {
     private Map<String,String> head;
     private Map<String,String> attributes;
 
-    public HttpServletRequestImpl(InputStream inputStream, Map<String,String> head, Map<String,String> attributes){
+    private String uri;
+    private String method;
+
+    public HttpServletRequestImpl(InputStream inputStream, Map<String,String> head, Map<String,String> attributes, String uri, String method){
         this.inputStream = inputStream;
         this.head = head;
         this.attributes = attributes;
+        this.uri = uri;
+        this.method = method;
     }
 
     public Object getAttribute(String s) {
@@ -54,7 +59,7 @@ public class HttpServletRequestImpl implements ServletRequest {
     }
 
     public String getParameter(String s) {
-        return null;
+        return attributes.get(s);
     }
 
     public Enumeration<String> getParameterNames() {
@@ -134,7 +139,7 @@ public class HttpServletRequestImpl implements ServletRequest {
     }
 
     public String getLocalAddr() {
-        return null;
+        return uri;
     }
 
     public int getLocalPort() {

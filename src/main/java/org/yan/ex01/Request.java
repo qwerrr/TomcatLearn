@@ -1,8 +1,11 @@
 package org.yan.ex01;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.yan.HttpProtocolSymbol;
 
 /**
  * @desc
@@ -12,15 +15,6 @@ import java.util.Map;
 public class Request implements IRequest{
 
     private static final int BUFFER_LENGTH = 2048;
-    private static final String HEAD_BODY_SEPARATOR = "\r\n\r\n";
-
-    private static final String HEAD_FIELD_SEPARATOR = "\r\n";
-    private static final String HEAD_DECLARE_SEPARATOR = " ";
-    private static final String HEAD_KV_SEPARATOR = ":";
-    private static final String HEAD_PROTOCOL_SEPARATOR = "/";
-
-    private static final String BODY_FIELD_SEPARATOR = "&";
-    private static final String BODY_KV_SEPARATOR = "=";
 
     private String method;
     private String uri;
@@ -75,16 +69,16 @@ public class Request implements IRequest{
      */
     public void parse() throws Exception {
         try {
-            String[] requestSplit = requestStr.split(HEAD_BODY_SEPARATOR);
+            String[] requestSplit = requestStr.split(HttpProtocolSymbol.HEAD_BODY_SEPARATOR);
             String headStr = requestSplit[0];
             //解析head
-            String[] headSplit = headStr.split(HEAD_FIELD_SEPARATOR);
+            String[] headSplit = headStr.split(HttpProtocolSymbol.HEAD_FIELD_SEPARATOR);
 
             String declareStr = headSplit[0];
-            String[] declareSplit = declareStr.split(HEAD_DECLARE_SEPARATOR);
+            String[] declareSplit = declareStr.split(HttpProtocolSymbol.HEAD_DECLARE_SEPARATOR);
             this.method = declareSplit[0];
             this.uri = declareSplit[1];
-            String[] protocolSplit = declareSplit[2].split(HEAD_PROTOCOL_SEPARATOR);
+            String[] protocolSplit = declareSplit[2].split(HttpProtocolSymbol.HEAD_PROTOCOL_SEPARATOR);
             this.protocol = protocolSplit[0];
             this.version = protocolSplit[1];
 
@@ -93,7 +87,7 @@ public class Request implements IRequest{
                 if(fieldStr.trim() == ""){
                     continue;
                 }
-                int kvSepaIndex = fieldStr.indexOf(HEAD_KV_SEPARATOR);
+                int kvSepaIndex = fieldStr.indexOf(HttpProtocolSymbol.HEAD_KV_SEPARATOR);
                 if(kvSepaIndex == -1){
                     continue;
                 }
@@ -104,10 +98,10 @@ public class Request implements IRequest{
             //解析body
             if(requestSplit.length == 2){
                 String bodyStr = requestSplit[1];
-                String[] bodySplit = bodyStr.split(BODY_FIELD_SEPARATOR);
+                String[] bodySplit = bodyStr.split(HttpProtocolSymbol.BODY_FIELD_SEPARATOR);
                 for(int i = 0; i < bodySplit.length; i++){
                     String fieldStr = bodySplit[i];
-                    String[] fieldSplit = fieldStr.split(BODY_KV_SEPARATOR);
+                    String[] fieldSplit = fieldStr.split(HttpProtocolSymbol.BODY_KV_SEPARATOR);
                     this.body.put(fieldSplit[0].trim(), fieldSplit[1]);
                 }
             }
