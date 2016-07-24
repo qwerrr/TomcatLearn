@@ -7,8 +7,33 @@ package org.yan.ex03.connector.http;
  */
 public class HttpRequestLine {
 
-    public static void main(String[] args) {
-        char[] chars = {'1','2','3','4','a','b','c'};
-        System.out.printf(new String(chars, 1, 3));
-    }
+    /**
+     * 请求方法:GET/POST/...
+     */
+    public String method;
+    /**
+     * 请求地址, 包括可能的参数
+     */
+    public String url;
+    /**
+     * 请求地址, 不包括可能的参数
+     */
+    public String uri;
+    /**
+     * 请求地址中可能的参数
+     */
+    public String urlParam;
+    /**
+     * 是否为带参数请求地址
+     */
+    public boolean isParmUrl;
+    /**
+     * 协议:HTTP/1.1 ...
+     */
+    public String protocol;
+
+    /**
+     * 整个
+     */
+    public byte[] requestLineBytes;
 }

@@ -7,10 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Http请求
@@ -19,7 +16,11 @@ import java.util.Map;
  */
 public class HttpRequest implements HttpServletRequest {
 
-    private InputStream is;
+    protected InputStream is;
+
+    protected HashMap<String,String> headers = new HashMap<String,String>();
+    protected ArrayList cookies = new ArrayList();
+    protected HashMap<String,String> parameters = null;
 
     public HttpRequest(InputStream is){
         this.is = is;
