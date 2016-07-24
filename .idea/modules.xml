@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/TomcatLeanr.iml" filepath="$PROJECT_DIR$/TomcatLeanr.iml" />
       <module fileurl="file://$PROJECT_DIR$/tomcat-mycode.iml" filepath="$PROJECT_DIR$/tomcat-mycode.iml" />
     </modules>
   </component>

@@ -23,10 +23,12 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="tomcat-mycode" />
+        <module name="TomcatLeanr" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="tomcat-mycode" target="1.5" />
+      <module name="TomcatLeanr" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
